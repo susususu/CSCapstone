@@ -17,8 +17,8 @@ class MyUserManager(BaseUserManager):
         #We can safetly create the user
         #Only the email field is required
         user = self.model(email=email)
-		user.last_name = last_name
         user.set_password(password)
+        user.last_name = last_name
 
         #If first_name is not present, set it as email's username by default
         if first_name is None or first_name == "" or first_name == '':                                
@@ -55,11 +55,9 @@ class MyUser(AbstractBaseUser):
 
     is_active = models.BooleanField(default=True,)
     is_admin = models.BooleanField(default=False,)
-
-    # #New fields added
-    # is_student = models.BooleanField(default=False,)
-    # is_professor = models.BooleanField(default=False,)
-    # is_engineer = models.BooleanField(default=False,)    
+    is_student = models.BooleanField(default=False,)
+    is_professor = models.BooleanField(default=False,)
+    is_engineer = models.BooleanField(default=False,)    
 
     objects = MyUserManager()
 
@@ -123,3 +121,21 @@ class Student(models.Model):
     @property
     def is_staff(self):
         return False
+		
+class Teacher(models.Model):
+    user = models.OneToOneField(
+        MyUser,
+        on_delete=models.CASCADE,
+        primary_key=True)
+    university = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    about = models.CharField(max_length=500)
+	
+class Engineer(models.Model):
+    user = models.OneToOneField(
+        MyUser,
+        on_delete=models.CASCADE,
+        primary_key=True)
+    university = models.CharField(max_length=100)
+    contact = models.CharField(max_length=100)
+    about = models.CharField(max_length=500)

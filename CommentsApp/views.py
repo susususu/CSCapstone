@@ -9,7 +9,7 @@ def getComments(request):
     context = {
         'comments' : comments_list,
     }
-    return render(request, 'comments.html', context)
+    return render(request, 'newComments.html', context)
 	
 def getCommentForm(request):
     return render(request, 'commentForm.html')
@@ -24,7 +24,7 @@ def addComment(request):
             context = {
                 'comments' : comments_list,
             }
-            return render(request, 'comments.html', context)
+            return render(request, 'newComments.html', context)
         else:
             form = forms.CommentForm()
-    return render(request, 'comments.html')
+    return render(request, 'newComments.html')
