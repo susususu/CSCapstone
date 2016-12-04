@@ -150,7 +150,6 @@ class Teacher(models.Model):
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True)
-    university = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)
     about = models.CharField(max_length=500)
     def get_full_name(self):        
@@ -181,7 +180,6 @@ class Engineer(models.Model):
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True)
-    university = models.CharField(max_length=100)
     contact = models.CharField(max_length=100)
     about = models.CharField(max_length=500)
     def get_full_name(self):        
