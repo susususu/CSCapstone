@@ -14,6 +14,7 @@ from django.contrib import messages
 
 from .forms import LoginForm, RegisterForm, UpdateForm
 from .models import MyUser, Student, Teacher, Engineer
+from UniversitiesApp.models import University
 
 
 # Auth Views
@@ -56,16 +57,30 @@ def auth_register(request):
 
     form = RegisterForm(request.POST or None)
     if form.is_valid():
+        stu = False
+        pro = False
+        eng = False
+        role = form.cleaned_data['role']
+        if role == 'STUDENT':
+            stu = True
+        elif role == 'TEACHER':
+            pro = True
+        else:
+            eng = True
         new_user = MyUser.objects.create_user(
             email=form.cleaned_data['email'],
             password=form.cleaned_data['password2'],
             first_name=form.cleaned_data['firstname'],
             last_name=form.cleaned_data['lastname'],
-            is_student=form.cleaned_data['student'],
-            is_professor=form.cleaned_data['professor'],
-            is_engineer=form.cleaned_data['engineer'],
+            is_student=stu,
+            is_professor=pro,
+            is_engineer=eng,
             )
         new_user.save()
+
+        uni = University.objects.filter(name=form.cleaned_data['university'])
+        uni[0].members.add(new_user)
+        
         if new_user.is_student:
             new_u = Student(user=new_user)
             new_u.save()
