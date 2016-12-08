@@ -44,7 +44,11 @@ INSTALLED_APPS = [
     'GroupsApp',
     'UniversitiesApp',
     'CommentsApp',
+    'tinymce',
+    'django_wysiwyg',
 ]
+
+DJANGO_WYSIWYG_FLAVOR = "tinymce"
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -18,7 +18,8 @@ class University(models.Model):
         return self.name
 	
 class Course(models.Model):
-	tag = models.CharField(max_length=10)
+	creator = models.CharField(max_length=50, null = True)
+	tag = models.CharField(max_length=10, primary_key=True)
 	name = models.CharField(max_length=50)
 	description = models.CharField(max_length=300)
 	university = models.ForeignKey(University, on_delete=models.CASCADE)

@@ -40,7 +40,7 @@ class MyUserManager(BaseUserManager):
         return user
 
     def create_superuser(self, email=None, password=None, first_name=None, last_name=None):
-        user = self.create_user(email, password=password, first_name=first_name, last_name=last_name,is_student=None, is_professor=None, is_engineer=None)
+        user = self.create_user(email, password=password, first_name=first_name, last_name=last_name,is_student=True, is_professor=None, is_engineer=None)
         user.is_admin = True
         user.save(using=self._db)
         return user
@@ -75,7 +75,7 @@ class MyUser(AbstractBaseUser):
     	null=True,
     	blank=True,
     	)
-
+    
     is_active = models.BooleanField(default=True,)
     is_admin = models.BooleanField(default=False,)
     is_student = models.BooleanField(default=False,)
@@ -121,6 +121,9 @@ class Student(models.Model):
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True)
+    university = models.CharField(max_length=100, null=True)
+    contact = models.CharField(max_length=100, null=True)
+    about = models.CharField(max_length=500, null=True)
 
     def get_full_name(self):        
         return "%s %s" %(self.user.first_name, self.user.last_name)
@@ -150,8 +153,10 @@ class Teacher(models.Model):
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True)
-    contact = models.CharField(max_length=100)
-    about = models.CharField(max_length=500)
+    university = models.CharField(max_length=100, null=True)
+    contact = models.CharField(max_length=100, null=True)
+    about = models.CharField(max_length=500, null=True)
+	
     def get_full_name(self):        
         return "%s %s" %(self.user.first_name, self.user.last_name)
 
@@ -180,8 +185,10 @@ class Engineer(models.Model):
         MyUser,
         on_delete=models.CASCADE,
         primary_key=True)
-    contact = models.CharField(max_length=100)
-    about = models.CharField(max_length=500)
+    alma_mater = models.CharField(max_length=140, null=True)
+    contact = models.CharField(max_length=100, null=True)
+    about = models.CharField(max_length=500, null=True)
+    company = models.CharField(max_length=50, null=True)
     def get_full_name(self):        
         return "%s %s" %(self.user.first_name, self.user.last_name)
 

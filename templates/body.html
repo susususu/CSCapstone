@@ -31,16 +31,7 @@
 							<li><a href="/group/all">Groups</a></li>
 						</ul>
 					</li>
-					<li role="presentation" class="dropdown">
-						<a class="dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
-						  Create new Group/Organization <span class="caret"></span>
-						</a>
-						<ul class="dropdown-menu">
-							<li><a href="/company/form">Create Company</a></li>
-							<li><a href="/university/form">Create University</a></li>
-							<li><a href="/group/form">Create Group</a></li>
-						</ul>
-					</li>
+                    <li><a href="/project/all">Projects</a></li>
 					<li><a href="/logout">Logout</a></li>
 				{% endif %}
 				</ul>
@@ -54,7 +45,11 @@
 	<div class='section container'>
 		<div class='section-container'>
 			{% for message in messages %}
-			<div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+				{% if message.tags == 'error' %}
+					<div class="alert alert-danger" role="alert">{{ message }}</div>
+				{% else %}
+					<div class="alert alert-{{ message.tags }}" role="alert">{{ message }}</div>
+				{% endif %}
 			{% endfor %}
 		</div>
 	</div>

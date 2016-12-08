@@ -8,12 +8,11 @@
 			<h2>{{ course.tag }}</h2>
 			<h3>{{ course.name }}</h3>
 			<p>{{ course.description }}</p>
-            {% if userInCourse %}
-            <a href="/university/course/unjoin?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Unjoin this Course</a>
-            {% else %}
-            <a href="/university/course/join?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Join this Course</a>
-            {% endif %}
-			<a href="/university/course/remove?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Delete this Course</a>
+			<p>Professor: {{ course.creator }}</p>
+			{% if user.get_username == course.creator %}
+				<a href="/university/course/remove?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Delete this Course</a>
+				<a href="/university/course/studentform?name={{ university.name }}&course={{ course.tag }}" class="btn btn-default">Add Students</a>
+			{% endif %}
 		</div>
     </div>
     <div class="container" role="main">
@@ -22,12 +21,14 @@
 				<thead>
 					<tr>
 						<th>Students</th>
+						<th>Action</th>
 					</tr>
 				</thead>
 				<tbody>
 					{% for item in course.members.all %}
 					<tr>
-						<td>{{ item.get_full_name }}</td>
+						<td>{{ item.get_username }}</td>
+						<td><a href="/university/course/deletestudent?name={{ university.name }}&course={{ course.tag }}&student={{ item.get_username }}" class="btn btn-default">Delete Student</a></td>
 					</tr>
 					{% endfor %}
 				</tbody>

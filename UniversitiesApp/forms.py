@@ -4,6 +4,7 @@ UniversitiesApp Forms
 Created by Jacob Dunbar on 11/5/2016.
 """
 from django import forms
+from .models import Course
 
 class UniversityForm(forms.Form):
     name = forms.CharField(label='Name', max_length=50)
@@ -15,3 +16,6 @@ class CourseForm(forms.Form):
 	tag = forms.CharField(label='Tag', max_length=10)
 	name = forms.CharField(label='Name', max_length=50)
 	description = forms.CharField(label='Description', max_length=300)
+	
+class StudentForm(forms.Form):
+	email = forms.CharField(label='Email', widget=forms.EmailInput, required=True)
